@@ -12,7 +12,7 @@ const connectDB = require('./config/db')
 const Producto = require('./models/Product')
 const Usuario = require('./models/User')
 
-
+console.log()
 
 // 2. MIDDLEWARES
 // VARIABLES DE ENTORNO

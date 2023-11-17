@@ -12,6 +12,7 @@ const connectDB = require('./config/db')
 const Producto = require('./models/Product')
 const Usuario = require('./models/User')
 
+
 // 2. MIDDLEWARES
 // VARIABLES DE ENTORNO
 require('dotenv').config()
@@ -31,13 +32,13 @@ const mercadopago = require("mercadopago")
 const { update } = require('./models/Product')
 
 mercadopago.configure({
-    access_token: "TEST-8283691311611373-111111-6e0891837d7ee10afe79266843d56e31-1545626684"
+    access_token: process.env.PROD_ACCESS_TOKEN
 })
 
 
 // 3. RUTEO
 
-// A. GUITARRAS
+// A. PRODUCTOS
 
 app.get("/obtener-productos", async (req, res) => {
     try {
@@ -92,7 +93,7 @@ app.post("/crear-producto", async (req, res) => {
     } catch (error) {
 
         res.status(500).json({
-            msg: "Hubo un error creando la guitarra",
+            msg: "Hubo un error creando el producto",
             error
         })
 
@@ -106,7 +107,7 @@ app.put("/actualizar-producto", async (req, res) => {
     try {
         const actualizacionProducto = await Producto.findByIdAndUpdate(id, { nombre, precio }, { new: true })
 
-        res.json(actualizacionGuitarra)
+        res.json(actualizacionProducto)
 
     } catch (error) {
 
@@ -170,7 +171,7 @@ app.post("/usuario/crear", async (req, res) => {
         // 2. FIRMAR EL JWT
         jwt.sign(
             payload, // DATOS QUE SE ACOMPAÑARÁN EN EL TOKEN
-            process.env.SECRET, // LLAVE PARA DESCIFRAR LA FIRMA ELECTRÓNICA DEL TOKEN,
+            process.env.SECRET_JWT, // LLAVE PARA DESCIFRAR LA FIRMA ELECTRÓNICA DEL TOKEN,
             {
                 expiresIn: 360000 // EXPIRACIÓN DEL TOKEN
             },
@@ -228,7 +229,7 @@ app.post("/usuario/iniciar-sesion", async (req, res) => {
         // 2. FIRMA DEL JWT
         jwt.sign(
             payload,
-            process.env.SECRET,
+            process.env.SECRET_JWT,
             {
                 expiresIn: 3600000
             },

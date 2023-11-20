@@ -8,7 +8,7 @@
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "Mike Nieva www.mikenieva.com",
+  "author": "Sebastian Mella",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
